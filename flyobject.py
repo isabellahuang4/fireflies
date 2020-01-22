@@ -1,9 +1,10 @@
+#first pass, has fly as object
 import sys
 import random as r
 
 LENGTH = 2
 NUM_SPECIES = 2
-NUM_EACH = 25
+NUM_EACH = 5
 EPOCHS = 100
 THRESHOLD = 1
 
@@ -58,20 +59,16 @@ def main(args):
 
     for epoch in range(EPOCHS):
         #use fully connected graph for now
-        delete = set()
-        for i in range(len(fireflies)):
-            for j in range(i+1, len(fireflies)):
+        for i in range(NUM_SPECIES * NUM_EACH):
+            for j in range(i+1, NUM_SPECIES * NUM_EACH):
                 same = fireflies[i].same_species(fireflies[j])
                 distance = fireflies[i].calc_similarity(fireflies[j])
                 if same and distance > THRESHOLD:
-                    delete.add(fireflies[i])
-                    delete.add(fireflies[j])
+                    fireflies[i].change_pattern(distance)
+                    fireflies[j].change_pattern(distance)
                 elif not same and distance <= THRESHOLD:
-                    delete.add(fireflies[i])
-                    delete.add(fireflies[j])
-        for f in delete:
-            fireflies.remove(f)
-        print(len(fireflies))
+                    fireflies[i].change_pattern(distance)
+                    fireflies[j].change_pattern(distance)
                 
         #for f in fireflies:
             #print(f.pattern, f.species)

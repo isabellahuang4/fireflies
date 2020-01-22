@@ -1,5 +1,3 @@
-#learning patterns thru interactions
-#learning distinctions thru interactions
 import sys
 import random as r
 from statistics import mean

@@ -1,6 +1,3 @@
-#learning pattern and distinctiveness thru random interactions
-#choose one interaction per firefly each epoch
-#THIS CONVERGES
 import sys
 import random as r
 from statistics import mean

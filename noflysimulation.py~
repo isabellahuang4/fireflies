@@ -1,6 +1,5 @@
 #random start, choose one to perturb, if better, replace
 #does improve, need high iterations
-#rarely reaches 10 (completely different at each bit)
 import sys
 import random as r
 
