@@ -1,7 +1,7 @@
 #learning pattern and distinctiveness thru random interactions
 #choose one interaction per firefly each epoch
 #can consider this fully connected but with randomness???
-#THIS CONVERGES (kinda)
+#THIS CONVERGES
 import sys
 import random as r
 from statistics import mean
@@ -38,6 +38,7 @@ class Firefly():
 
     #can we find a sim function that de-emphasizes sim in 0s? 
     # more realistic?
+    # higher is more similar w.r.t 1s
     def calc_similarity2(self, other):
         ct = 0
         for i in range(LENGTH):
@@ -66,7 +67,12 @@ class Firefly():
         for i in range(LENGTH):
             if r.random() < PERTURB_PROB:
                 self.pattern[i] = (self.pattern[i] + 1) %2
-        
+
+def printall(flies):
+    flies.sort()
+    for f in flies:
+        print(f.pattern, f.species)
+    
     
 def main(args):
     #create fireflies
@@ -121,14 +127,8 @@ def main(args):
                 fireflies[i].update_simscore(distance)
                 fireflies[j].update_simscore(distance)
 
-        
-        #print('epoch', epoch)
-        #for f in fireflies:
-            #print(f.pattern, f.species)
-    
-    fireflies.sort()
-    for f in fireflies:
-        print(f.pattern, f.species)
+
+    printall(fireflies)
                     
 
 

@@ -1,18 +1,15 @@
-#learning pattern and distinctiveness thru random interactions
-#choose one interaction per firefly each epoch
-#can consider this fully connected but with randomness???
-#THIS CONVERGES
+#try to generalize to multiple species
 import sys
 import random as r
 from statistics import mean
+from math import floor
 
 LENGTH = 10
-NUM_SPECIES = 2
+NUM_SPECIES = 3
 NUM_EACH = 20
-EPOCHS = 100
+EPOCHS = 150
 PERTURB_PROB = .3
-MUTATE_PROB = .1 #can we have mutate_prob change as inverse fxn of #epochs? 
-#not too realistic, but helps convergence... (explore v exploit)
+MUTATE_PROB = .1 
 
 class Firefly():
     def __init__(self, species):
@@ -21,7 +18,10 @@ class Firefly():
         self.simscore = 0
     
     def __lt__(self, other):
-        return self.species < other.species
+        if self.species != other.species:
+            return self.species < other.species
+        else:
+            return self.simscore < other.simscore
 
     def init_pattern(self):
         p = [0] * LENGTH
@@ -68,11 +68,13 @@ class Firefly():
             if r.random() < PERTURB_PROB:
                 self.pattern[i] = (self.pattern[i] + 1) %2
 
+
+
 def printall(flies):
     flies.sort()
     for f in flies:
         print(f.pattern, f.species)
-    
+        
     
 def main(args):
     #create fireflies
@@ -84,12 +86,11 @@ def main(args):
     for epoch in range(EPOCHS):
         r.shuffle(fireflies)
 
-        for f in range(NUM_EACH):
+        for f in range(floor((NUM_SPECIES * NUM_EACH)/2)):
             i = 2*f
             j = i+1
-            same = fireflies[i].same_species(fireflies[j])
             #same species
-            if same:
+            if fireflies[i].same_species(fireflies[j]):
                 #both no pattern
                 if fireflies[i].pattern == None and fireflies[j].pattern == None:
                     fireflies[i].init_pattern()
@@ -127,12 +128,15 @@ def main(args):
                 fireflies[i].update_simscore(distance)
                 fireflies[j].update_simscore(distance)
 
-
+        
         if epoch % 20 == 0:
             print(epoch)
             printall(fireflies)
+    
 
-    printall(fireflies)
+    print(fireflies[0].pattern)
+    print(fireflies[NUM_EACH].pattern)
+    print(fireflies[(NUM_EACH*2)].pattern)
                     
 
 
