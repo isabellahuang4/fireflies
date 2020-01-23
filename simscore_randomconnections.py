@@ -1,5 +1,6 @@
 #learning pattern and distinctiveness thru random interactions
 #choose one interaction per firefly each epoch
+#can consider this fully connected but with randomness???
 #THIS CONVERGES
 import sys
 import random as r
