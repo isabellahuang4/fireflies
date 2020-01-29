@@ -111,7 +111,7 @@ class Firefly():
                 self.pattern[1] = 1
             self.pattern[2] = self.pattern[1] + silence
 
-        if change == 2: #keep that quiet cannot be more than flash duration
+        if change == 2: #maintain that quiet cannot be more than flash duration
             silence = self.pattern[2] - self.pattern[1]
             if silence == 1:
                 silence += 1
@@ -171,13 +171,13 @@ def main(args):
                     if fireflies[i].simscore >= fireflies[j].simscore:
                         if r.random() < (fireflies[i].simscore/LENGTH):
                             fireflies[j].pattern = fireflies[i].pattern
-                            if r.random() < MUTATE_PROB and epoch < 75:
+                            if r.random() < MUTATE_PROB: #and epoch < 75:
                                 fireflies[j].mutate()
                             fireflies[j].reset_simscore()
                     else:
                         if r.random() < (fireflies[j].simscore/LENGTH):
                             fireflies[i].pattern = fireflies[j].pattern
-                            if r.random() < MUTATE_PROB and epoch < 75:
+                            if r.random() < MUTATE_PROB: #and epoch < 75:
                                 fireflies[i].mutate()
                             fireflies[i].reset_simscore()
             #diff species
