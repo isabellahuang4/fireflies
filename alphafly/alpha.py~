@@ -22,8 +22,7 @@ class Firefly():
     
     def __lt__(self, other):
         if self.species == other.species:
-            #higher simscore is better
-            return self.simscore > other.simscore
+            return self.simscore < other.simscore
         else:
             return self.species < other.species
 
