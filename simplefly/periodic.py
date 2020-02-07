@@ -1,4 +1,4 @@
-#similarity score respects periodicity
+#similarity score respects periodicity by finding common substring "wrapped"
 
 import sys
 import random as r
@@ -7,7 +7,7 @@ from statistics import mean
 LENGTH = 10
 NUM_SPECIES = 2
 NUM_EACH = 20
-EPOCHS = 300
+EPOCHS = 1000
 PERTURB_PROB = .3
 MUTATE_PROB = .1 
 
@@ -105,12 +105,12 @@ def main(args):
                     #when replicating, do so with chance of mutation
                     if fireflies[i].simscore <= fireflies[j].simscore:
                         fireflies[j].pattern = fireflies[i].pattern
-                        if r.random() < MUTATE_PROB and epoch < 275:
+                        if r.random() < MUTATE_PROB and epoch < 975:
                             fireflies[j].mutate()
                         fireflies[j].reset_simscore()
                     else:
                         fireflies[i].pattern = fireflies[j].pattern
-                        if r.random() < MUTATE_PROB and epoch < 275:
+                        if r.random() < MUTATE_PROB and epoch < 975:
                             fireflies[i].mutate()
                         fireflies[i].reset_simscore()
             #diff species
