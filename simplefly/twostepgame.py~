@@ -10,9 +10,10 @@ from statistics import mean
 LENGTH = 10
 NUM_SPECIES = 2
 NUM_EACH = 20
-EPOCHS = 1000
-PERTURB_PROB = .3
-MUTATE_PROB = .1
+EPOCHS = 500
+ROUNDS = 5
+PERTURB_PROB = .2
+MUTATE_PROB = .3
 DECISION_THRESHOLD = .7 
 PENALTY = -10
 REWARD = 10
@@ -42,11 +43,11 @@ class Firefly():
     #find longest shared substring with segment of sequence given
     # no wrapping, yet (because how to normalize??)
     def calc_similarity(self, seq):
-        X = self.pattern
+        X = self.pattern + self.pattern[:LENGTH-1]
         Y = seq
-        table = [[0 for k in range(len(seq)+1)] for l in range(LENGTH+1)]
+        table = [[0 for k in range(len(seq)+1)] for l in range(2*LENGTH)]
         score = 0
-        for i in range(LENGTH+1):
+        for i in range(2*LENGTH):
             for j in range(len(seq)+1):
                 if (i == 0 or j == 0):
                     table[i][j] = 0
@@ -60,7 +61,7 @@ class Firefly():
         return score/len(seq)
 
     def reset_score(self):
-        self.score = 0
+        self.score = None
 
     def update_score(self, new):
         if self.score == None:
@@ -150,12 +151,18 @@ def main(args):
             fireflies[j+(NUM_EACH*i)] = Firefly(i)
 
     for epoch in range(EPOCHS):
-        if epoch != 0:
+
+        for round in range(ROUNDS):
+            #if very first round, don't shuffle
+            if epoch != 0 or round != 0:
+                r.shuffle(fireflies)
+            round_one(fireflies)
+            if epoch == 0:
+                break
+        
+        for round in range(ROUNDS):
             r.shuffle(fireflies)
-        # for first first round, don't shuffle!!!!!!
-        round_one(fireflies)
-        r.shuffle(fireflies)
-        round_two(fireflies)
+            round_two(fireflies)
 
 
     printall(fireflies)

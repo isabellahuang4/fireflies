@@ -37,12 +37,12 @@ class Firefly():
     #repeat each pattern so we get the "wrap"
     #smol similarity is better
     def calc_similarity(self, other):
-        X = self.pattern + self.pattern
-        Y = other.pattern + other.pattern
-        table = [[0 for k in range(2*LENGTH+1)] for l in range(2*LENGTH+1)]
+        X = self.pattern + self.pattern[:LENGTH-1]
+        Y = other.pattern + other.pattern[:LENGTH-1]
+        table = [[0 for k in range(2*LENGTH)] for l in range(2*LENGTH)]
         score = 0
-        for i in range(2*LENGTH+1):
-            for j in range(2*LENGTH+1):
+        for i in range(2*LENGTH):
+            for j in range(2*LENGTH):
                 if (i == 0 or j == 0):
                     table[i][j] = 0
                 elif (X[i-1] == Y[j-1]):
