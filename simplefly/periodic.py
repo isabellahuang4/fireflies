@@ -18,7 +18,10 @@ class Firefly():
         self.simscore = 0
     
     def __lt__(self, other):
-        return self.species < other.species
+        if self.species == other.species:
+            return self.simscore < other.simscore
+        else:
+            return self.species < other.species
 
     def init_pattern(self):
         p = [0] * LENGTH

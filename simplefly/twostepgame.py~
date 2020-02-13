@@ -41,7 +41,7 @@ class Firefly():
             return False
 
     #find longest shared substring with segment of sequence given
-    # no wrapping, yet (because how to normalize??)
+    # no wrapping of partial sequence
     def calc_similarity(self, seq):
         X = self.pattern + self.pattern[:LENGTH-1]
         Y = seq

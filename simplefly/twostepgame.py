@@ -11,7 +11,8 @@ LENGTH = 10
 NUM_SPECIES = 2
 NUM_EACH = 20
 EPOCHS = 500
-ROUNDS = 5
+FIRST_ROUNDS = 2
+SECOND_ROUNDS = 5
 PERTURB_PROB = .2
 MUTATE_PROB = .3
 DECISION_THRESHOLD = .7 
@@ -152,7 +153,7 @@ def main(args):
 
     for epoch in range(EPOCHS):
 
-        for round in range(ROUNDS):
+        for round in range(FIRST_ROUNDS):
             #if very first round, don't shuffle
             if epoch != 0 or round != 0:
                 r.shuffle(fireflies)
@@ -160,7 +161,7 @@ def main(args):
             if epoch == 0:
                 break
         
-        for round in range(ROUNDS):
+        for round in range(SECOND_ROUNDS):
             r.shuffle(fireflies)
             round_two(fireflies)
 
