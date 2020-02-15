@@ -13,7 +13,7 @@ NUM_SPECIES = 2
 NUM_EACH = 20
 EPOCHS = 500
 FIRST_ROUNDS = 2
-SECOND_ROUNDS = 5
+SECOND_ROUNDS = 10
 PERTURB_PROB = .3
 MUTATE_PROB = .1 
 DECISION_THRESHOLD = .7
@@ -31,11 +31,14 @@ def list_flies(flies):
         else:
             seen[(str(f.pattern), f.species)] += 1
 
+    #assume convergence and get simscore
+    score = flies[0].calc_similarity(flies[39].pattern)
+    seen[score] = 1
     return seen
 
 
 def print_csv(results):
-    with open('results_2step.csv', mode = 'w') as file:
+    with open('results_2step_longer2ndround.csv', mode = 'w') as file:
         writer = csv.writer(file, delimiter = ',')
         
         for run in results.keys():
