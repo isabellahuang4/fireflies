@@ -5,12 +5,11 @@ import random as r
 from statistics import mean
 from itertools import combinations
 
-LENGTH = 10
-MAX_FLASH = 4
+LENGTH = 20
+MAX_FLASH = 8
 NUM_SPECIES = 2
-NUM_EACH = 10
-EPOCHS = 200
-PERTURB_PROB = .3
+NUM_EACH = 15
+EPOCHS = 150
 MUTATE_PROB = .1 
 
 class Firefly():
