@@ -5,8 +5,8 @@ import random as r
 from statistics import mean
 from itertools import combinations
 
-LENGTH = 5
-MAX_FLASH = 2
+LENGTH = 20
+MAX_FLASH = 8
 NUM_SPECIES = 2
 NUM_EACH = 15
 EPOCHS = 150
