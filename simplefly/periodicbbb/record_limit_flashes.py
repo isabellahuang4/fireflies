@@ -5,7 +5,8 @@ import sys
 import random as r
 from statistics import mean
 from itertools import combinations
-from limit_flashes import Firefly
+#from limit_flashes import Firefly
+from set_flashes import Firefly
 import csv
 
 NUM_SPECIES = 3

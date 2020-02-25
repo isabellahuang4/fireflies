@@ -8,8 +8,8 @@ from itertools import combinations
 from limit_flashes import Firefly
 import csv
 
-NUM_SPECIES = 10
-NUM_EACH = 5
+NUM_SPECIES = 3
+NUM_EACH = 10
 EPOCHS = 350
 MUTATE_PROB = .1 
 REPEATS = 10

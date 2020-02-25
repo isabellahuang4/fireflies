@@ -1,12 +1,12 @@
-#limit number of "on" bits in pattern
+#constant number of flashes
 
 import sys
 import random as r
 from statistics import mean
 from itertools import combinations
 
-LENGTH = 5
-MAX_FLASH = 2
+LENGTH = 10
+MAX_FLASH = 4
 NUM_SPECIES = 2
 NUM_EACH = 15
 EPOCHS = 150
@@ -26,7 +26,7 @@ class Firefly():
 
     def init_pattern(self):
         p = [0] * LENGTH
-        num_flash = r.randint(1, MAX_FLASH)
+        num_flash = MAX_FLASH
         indicies = r.sample(range(LENGTH), num_flash)
         for i in indicies:
             p[i] = 1
@@ -67,15 +67,8 @@ class Firefly():
         else:
             self.simscore = mean([self.simscore, newsim])
 
-    #first choose whether to (0) add a flash, (1) remove a flash, or (2) move a flash
-    #if already at max_flash, cannot add
+    #MOVE THE FLASH
     def mutate(self):
-        if sum(self.pattern) == MAX_FLASH:
-            m = r.randint(1,2)
-        elif sum(self.pattern) == 1:
-            m = r.choice([0,2])
-        else:
-            m = r.randint(0,2)
         current_flashes = []
         current_silence = []
         for i in range(LENGTH):
@@ -84,17 +77,11 @@ class Firefly():
             else:
                 current_silence.append(i)
 
-        if m == 0:
-            add = r.choice(current_silence)
-            self.pattern[add] = 1
-        elif m == 1:
-            delete = r.choice(current_flashes)
-            self.pattern[delete] = 0
-        elif m == 2: #no limit on how far flash can move rn
-            add = r.choice(current_silence)
-            delete = r.choice(current_flashes)
-            self.pattern[add] = 1
-            self.pattern[delete] = 0
+                
+        add = r.choice(current_silence)
+        delete = r.choice(current_flashes)
+        self.pattern[add] = 1
+        self.pattern[delete] = 0
 
 
 def printall(flies):
