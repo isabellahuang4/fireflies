@@ -9,7 +9,7 @@ from itertools import combinations
 from set_flashes import Firefly
 import csv
 
-NUM_SPECIES = 3
+NUM_SPECIES = 10
 NUM_EACH = 10
 EPOCHS = 350
 MUTATE_PROB = .1 
@@ -75,7 +75,7 @@ def list_flies(flies):
     return seen
 
 def print_csv(results):
-    with open('results_flash_lim.csv', mode = 'w') as file:
+    with open('results_set_flash.csv', mode = 'w') as file:
         writer = csv.writer(file, delimiter = ',')
         
         for run in results.keys():
