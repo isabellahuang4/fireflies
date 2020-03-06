@@ -13,7 +13,7 @@ LENGTH = 10
 MAX_FLASH = 4
 NUM_SPECIES = 2
 NUM_EACH = 15 #NUM_EACH MUST BE EVEN
-EPOCHS = 200
+EPOCHS = 100
 MUTATE_PROB = .1
 DECISION_THRESHOLD = .7 
 PENALTY = -10
@@ -102,7 +102,7 @@ def printall(flies):
     flies.sort()
     for f in flies:
         print(f.pattern, f.species)
-    print(flies[0].calc_similarity(flies[NUM_SPECIES*NUM_EACH - 1]))
+    print(flies[0].calc_similarity(flies[NUM_SPECIES*NUM_EACH - 1].pattern))
 
 #returns list of pairs of flies of same species
 def get_same_species(flies):
