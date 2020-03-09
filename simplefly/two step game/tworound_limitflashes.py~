@@ -4,6 +4,8 @@
 #second round: send partial pattern, make decision --> get score
 #using the limitflashes fly
 #using all pairings per round
+#pos reward bigger for smaller subsequence
+#neg penalty bigger for longer subsequence
 
 import sys
 import random as r
@@ -17,7 +19,7 @@ EPOCHS = 100
 MUTATE_PROB = .1
 DECISION_THRESHOLD = .7 
 PENALTY = -10
-REWARD = 10
+REWARD = 20
 
 class Firefly():
     def __init__(self, species):
@@ -153,19 +155,19 @@ def round_two(flies):
         if decision < DECISION_THRESHOLD:
             #decided different species
             if i.same_species(j):
-                #negative reward to both??, scaled by length of seq??
+                #neg penalty
                 i.update_score(PENALTY*(seq_length/LENGTH))
                 j.update_score(PENALTY*(seq_length/LENGTH))
             else:
-                #pos reward
-                i.update_score(REWARD*(seq_length/LENGTH))
-                j.update_score(REWARD*(seq_length/LENGTH))
+                #pos reward 
+                i.update_score(REWARD*(LENGTH/seq_length))
+                j.update_score(REWARD*(LENGTH/seq_length))
         else:
             #decided same species
             if i.same_species(j):
                 #pos reward
-                i.update_score(REWARD*(seq_length/LENGTH))
-                j.update_score(REWARD*(seq_length/LENGTH))
+                i.update_score(REWARD*(LENGTH/seq_length))
+                j.update_score(REWARD*(LENGTH/seq_length))
             else:
                 #neg reward
                 i.update_score(PENALTY*(seq_length/LENGTH))

@@ -13,13 +13,13 @@ from itertools import combinations
 
 LENGTH = 10
 MAX_FLASH = 4
-NUM_SPECIES = 2
+NUM_SPECIES = 3
 NUM_EACH = 15 #NUM_EACH MUST BE EVEN
 EPOCHS = 100
 MUTATE_PROB = .1
 DECISION_THRESHOLD = .7 
 PENALTY = -10
-REWARD = 10
+REWARD = 20
 
 class Firefly():
     def __init__(self, species):
