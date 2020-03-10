@@ -1,4 +1,4 @@
-#recording twostepgame
+#recording twostepgame with limitflash fly
 
 import sys
 import random as r
@@ -7,8 +7,8 @@ from tworound_limitflashes import round_one
 from tworound_limitflashes import round_two
 import csv
 
-EPOCHS = 500
-TRIALS = 25
+EPOCHS = 600
+TRIALS = 20
 NUM_SPECIES = 3
 NUM_EACH = 15
 
@@ -25,6 +25,10 @@ def list_flies(flies):
     #assume convergence and get simscore
     score1 = flies[0].calc_similarity(flies[29].pattern)
     seen[score1] = 1
+    score2 = flies[0].calc_similarity(flies[44].pattern)
+    seen[score2] = 1
+    score3 = flies[29].calc_similarity(flies[44].pattern)
+    seen[score3] = 1
     return seen
 
 

@@ -1,14 +1,15 @@
-#recording twostepgame
+#recording twostepgame with limitflash fly
 
 import sys
 import random as r
 from tworound_limitflashes import Firefly
 from tworound_limitflashes import round_one
 from tworound_limitflashes import round_two
+from draw_pattern import draw_patterns
 import csv
 
 EPOCHS = 600
-TRIALS = 25
+TRIALS = 20
 NUM_SPECIES = 3
 NUM_EACH = 15
 

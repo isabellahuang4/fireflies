@@ -1,25 +1,27 @@
 # naming game with TWO rounds
 #first round: original game (teaching patterns and renaming based on scores)
-#           : if meet opposite, do nothing
+#           : all pairs within same species
 #second round: send partial pattern, make decision --> get score
-#using the limitflashes fly
-#using all pairings per round
+#            : all different-species pairs
+#using the limitflashes fly -- upper bound on num flash in pattern
+
 #pos reward bigger for smaller subsequence
 #neg penalty bigger for longer subsequence
 
 import sys
 import random as r
 from itertools import combinations
+from draw_pattern import draw_patterns
 
 LENGTH = 10
 MAX_FLASH = 4
-NUM_SPECIES = 2
-NUM_EACH = 15 #NUM_EACH MUST BE EVEN
+NUM_SPECIES = 3
+NUM_EACH = 15 
 EPOCHS = 100
 MUTATE_PROB = .1
 DECISION_THRESHOLD = .7 
-PENALTY = -10
-REWARD = 20
+PENALTY = -20
+REWARD = 10
 
 class Firefly():
     def __init__(self, species):
@@ -102,8 +104,9 @@ class Firefly():
             
 def printall(flies):
     flies.sort()
-    for f in flies:
-        print(f.pattern, f.species)
+    draw_patterns([flies[0].pattern,flies[15].pattern,flies[30].pattern])
+#    for f in flies:
+#        print(f.pattern, f.species)
     print(flies[0].calc_similarity(flies[NUM_SPECIES*NUM_EACH - 1].pattern))
 
 #returns list of pairs of flies of same species
@@ -188,7 +191,6 @@ def main(args):
 
     printall(fireflies)
                     
-
 
 
 if __name__ == '__main__':
