@@ -8,6 +8,8 @@
 #pos reward bigger for smaller subsequence
 #neg penalty bigger for longer subsequence
 
+#push patterns to be periodic during mutation with prob
+
 import sys
 import random as r
 import math
@@ -95,9 +97,9 @@ class Firefly():
         i = indices[0]
         p = [0] * LENGTH
         p[i] = 1
-        p[i+a] = 1
+        p[(i+a)%10] = 1
         if len(indices) > 2:
-            p[i+a+b] = 1
+            p[(i+a+b)%10] = 1
         if len(indices) > 3:
             p[(i+a+b+a)%10] = 1
         self.pattern = p
@@ -132,10 +134,12 @@ class Firefly():
             
 def printall(flies):
     flies.sort()
-    draw_patterns([flies[0].pattern,flies[15].pattern,flies[30].pattern])
 #    for f in flies:
 #        print(f.pattern, f.species)
-    print(flies[0].calc_similarity(flies[NUM_SPECIES*NUM_EACH - 1].pattern))
+    print(flies[0].calc_similarity(flies[15].pattern))
+    print(flies[0].calc_similarity(flies[30].pattern))
+    print(flies[15].calc_similarity(flies[30].pattern))
+    draw_patterns([flies[0].pattern,flies[15].pattern,flies[30].pattern])
 
 #returns list of pairs of flies of same species
 def get_same_species(flies):
@@ -165,11 +169,15 @@ def round_one(flies):
             if i.score >= j.score:
                 j.pattern = i.pattern
                 if r.random() < MUTATE_PROB:
+                    j.push_periodic()
+                elif r.random() < MUTATE_PROB:
                     j.mutate()
                 j.reset_score()
             else:
                 i.pattern = j.pattern
                 if r.random() < MUTATE_PROB:
+                    i.push_periodic()
+                elif r.random() < MUTATE_PROB:
                     i.mutate()
                 i.reset_score()
 

@@ -10,7 +10,9 @@
 
 import sys
 import random as r
+import math
 from itertools import combinations
+from statistics import mean
 from draw_pattern import draw_patterns
 
 LENGTH = 10
