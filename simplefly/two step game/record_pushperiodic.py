@@ -53,7 +53,7 @@ def main(args):
                 fireflies[j+(NUM_EACH*i)] = Firefly(i)
         
         for epoch in range(EPOCHS):
-            round_one(fireflies)
+            round_one(fireflies, epoch)
             round_two(fireflies)
 
         runs[rep] = list_flies(fireflies)

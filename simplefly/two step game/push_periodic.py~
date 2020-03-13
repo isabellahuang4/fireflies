@@ -21,8 +21,8 @@ LENGTH = 10
 MAX_FLASH = 4
 NUM_SPECIES = 3
 NUM_EACH = 15 
-EPOCHS = 100
-MUTATE_PROB = .1
+EPOCHS = 600
+MUTATE_PROB = .05
 DECISION_THRESHOLD = .7 
 PENALTY = -30
 REWARD = 10
@@ -34,7 +34,10 @@ class Firefly():
         self.score = None
     
     def __lt__(self, other):
-        return self.species < other.species
+        if self.species == other.species and self.score != None and other.score != None:
+            return self.score > other.score
+        else:
+            return self.species < other.species
 
     def init_pattern(self):
         p = [0] * LENGTH
@@ -134,10 +137,13 @@ class Firefly():
             
 def printall(flies):
     flies.sort()
+    for f in flies:
+        print(f.pattern, f.species, f.score)
+    print(flies[0].calc_similarity(flies[15].pattern))
+    print(flies[0].calc_similarity(flies[30].pattern))
+    print(flies[15].calc_similarity(flies[30].pattern))
+
     draw_patterns([flies[0].pattern,flies[15].pattern,flies[30].pattern])
-#    for f in flies:
-#        print(f.pattern, f.species)
-    print(flies[0].calc_similarity(flies[NUM_SPECIES*NUM_EACH - 1].pattern))
 
 #returns list of pairs of flies of same species
 def get_same_species(flies):
@@ -149,7 +155,7 @@ def get_same_species(flies):
     return pairs
 
 #need to check that pointers work out
-def round_one(flies):
+def round_one(flies, epoch):
     for (i,j) in get_same_species(flies):
         #both no pattern
         if i.pattern == None and j.pattern == None:
@@ -166,16 +172,16 @@ def round_one(flies):
         elif i.score != None and j.score != None:
             if i.score >= j.score:
                 j.pattern = i.pattern
-                if r.random() < MUTATE_PROB:
+                if r.random() < MUTATE_PROB and epoch < 500:
                     j.push_periodic()
-                elif r.random() < MUTATE_PROB:
+                elif r.random() < MUTATE_PROB and epoch < 500:
                     j.mutate()
                 j.reset_score()
             else:
                 i.pattern = j.pattern
-                if r.random() < MUTATE_PROB:
+                if r.random() < MUTATE_PROB and epoch < 500:
                     i.push_periodic()
-                elif r.random() < MUTATE_PROB:
+                elif r.random() < MUTATE_PROB and epoch < 500:
                     i.mutate()
                 i.reset_score()
 
