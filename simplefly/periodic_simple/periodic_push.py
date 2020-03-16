@@ -1,15 +1,16 @@
-#limit number of "on" bits in pattern
+#pushing patterns toward periodicty with mutation prob
 
 import sys
 import random as r
 from statistics import mean
 from itertools import combinations
+import math
 
 LENGTH = 10
 MAX_FLASH = 4
 NUM_SPECIES = 3
 NUM_EACH = 15
-EPOCHS = 150
+EPOCHS = 200
 MUTATE_PROB = .1 
 
 class Firefly():
@@ -59,6 +60,33 @@ class Firefly():
             self.simscore = newsim
         else:
             self.simscore = mean([self.simscore, newsim])
+
+    #encourage periodicity
+    def push_periodic(self):
+        indices = []
+        for i in range(LENGTH):
+            if self.pattern[i] == 1:
+                indices.append(i)
+        differences = []
+        for i in range(len(indices)):
+            if i == len(indices)-1:
+                d = (indices[0] - indices[i]) % LENGTH
+            else:
+                d = indices[i+1] - indices[i]
+            differences.append(d)
+        avg = mean(differences)
+        a = math.ceil(avg)
+        b = math.floor(avg)
+        i = indices[0]
+        p = [0] * LENGTH
+        p[i] = 1
+        p[(i+a)%LENGTH] = 1
+        if len(indices) > 2:
+            p[(i+a+b)%LENGTH] = 1
+        if len(indices) > 3:
+            p[(i+a+b+a)%LENGTH] = 1
+        self.pattern = p
+
 
     #first choose whether to (0) add a flash, (1) remove a flash, or (2) move a flash
     #if already at max_flash, cannot add
@@ -118,12 +146,18 @@ def round(fireflies, epoch):
                 if i.simscore <= j.simscore:
                     j.pattern = i.pattern
                     if r.random() < MUTATE_PROB and epoch < 175:
-                        j.mutate()
+                        if r.random() < .5:
+                            j.mutate()
+                        else:
+                            j.push_periodic()
                     j.reset_simscore()
                 else:
                     i.pattern = j.pattern
                     if r.random() < MUTATE_PROB and epoch < 175:
-                        i.mutate()
+                        if r.random() < .5:
+                            i.mutate()
+                        else:
+                            i.push_periodic()
                     i.reset_simscore()
         #diff species                                                                    
         else:

@@ -1,4 +1,4 @@
-#limit number of "on" bits in pattern
+#simscore looks bitbybit with shifting
 
 import sys
 import random as r
@@ -96,6 +96,45 @@ def printall(flies):
         print(f.pattern, f.species)
     print(flies[0].calc_similarity(flies[NUM_SPECIES*NUM_EACH - 1]))
     
+def round(fireflies, epoch):
+    for (i, j) in combinations(fireflies, 2):
+        same = i.same_species(j)
+        #same species                                                 
+        if same:
+            #both no pattern                                                             
+            if i.pattern == None and j.pattern == None:
+                i.init_pattern()
+                j.pattern = i.pattern
+            #j has pattern                                                               
+            elif i.pattern == None:
+                i.pattern = j.pattern
+            #i has pattern                                                               
+            elif j.pattern == None:
+                j.pattern = i.pattern
+            #both have                                                                   
+            else:
+            #compare aggregate sim scores, replicate smaller one                    
+            #when replicating, do so with chance of mutation                         
+                if i.simscore <= j.simscore:
+                    j.pattern = i.pattern
+                    if r.random() < MUTATE_PROB and epoch < 175:
+                        j.mutate()
+                    j.reset_simscore()
+                else:
+                    i.pattern = j.pattern
+                    if r.random() < MUTATE_PROB and epoch < 175:
+                        i.mutate()
+                    i.reset_simscore()
+        #diff species                                                                    
+        else:
+            if i.pattern == None:
+                i.init_pattern()
+            if j.pattern == None:
+                j.init_pattern()
+            distance = i.calc_similarity(j)
+            i.update_simscore(distance)
+            j.update_simscore(distance)
+
 def main(args):
     #create fireflies
     fireflies = [0] * (NUM_SPECIES * NUM_EACH)
@@ -105,45 +144,7 @@ def main(args):
 
     for epoch in range(EPOCHS):
         r.shuffle(fireflies)
-
-        for (i, j) in combinations(fireflies, 2):
-            same = i.same_species(j)
-            #same species
-            if same:
-                #both no pattern
-                if i.pattern == None and j.pattern == None:
-                    i.init_pattern()
-                    j.pattern = i.pattern
-                #j has pattern
-                elif i.pattern == None:
-                    i.pattern = j.pattern
-                #i has pattern
-                elif j.pattern == None:
-                    j.pattern = i.pattern
-                #both have
-                else:
-                    #compare aggregate sim scores, replicate smaller one 
-                    #when replicating, do so with chance of mutation
-                    if i.simscore <= j.simscore:
-                        j.pattern = i.pattern
-                        if r.random() < MUTATE_PROB and epoch < 100:
-                            j.mutate()
-                        j.reset_simscore()
-                    else:
-                        i.pattern = j.pattern
-                        if r.random() < MUTATE_PROB and epoch < 100:
-                            i.mutate()
-                        i.reset_simscore()
-            #diff species
-            else:
-                if i.pattern == None:
-                    i.init_pattern()
-                if j.pattern == None:
-                    j.init_pattern()
-                distance = i.calc_similarity(j)
-                i.update_simscore(distance)
-                j.update_simscore(distance)
-
+        round(fireflies, epoch)
 
     printall(fireflies)
                     
