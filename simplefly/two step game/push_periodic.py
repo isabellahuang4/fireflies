@@ -88,23 +88,42 @@ class Firefly():
             if self.pattern[i] == 1:
                 indices.append(i)
         differences = []
+        two = False
         for i in range(len(indices)):
             if i == len(indices)-1:
                 d = (indices[0] - indices[i]) % LENGTH
+                if d == 1:
+                    two = True
             else:
-                d = indices[i+1] - indices[i]
+                d = (indices[i+1] - indices[i]) % LENGTH
+                if d == 1:
+                    two = True
             differences.append(d)
-        avg = mean(differences)
-        a = math.ceil(avg)
-        b = math.floor(avg)
-        i = indices[0]
+
         p = [0] * LENGTH
-        p[i] = 1
-        p[(i+a)%10] = 1
-        if len(indices) > 2:
-            p[(i+a+b)%10] = 1
-        if len(indices) > 3:
-            p[(i+a+b+a)%10] = 1
+
+        if two:
+            zero = differences.index(1)
+            i = indices[zero]
+            p[i] = 1
+            j = indices[(zero+1) % len(indices)]
+            p[j] = 1
+            a = differences[(zero+1) % len(differences)]
+            p[(j+a) % LENGTH] = 1
+            p[(j+a+1) % LENGTH] = 1
+
+        else:
+            avg = mean(differences)
+            a = math.ceil(avg)
+            b = math.floor(avg)
+            i = indices[0]
+            p[i] = 1
+            p[(i+a)%10] = 1
+            if len(indices) > 2:
+                p[(i+a+b)%10] = 1
+            if len(indices) > 3:
+                p[(i+a+b+a)%10] = 1
+
         self.pattern = p
             
 
