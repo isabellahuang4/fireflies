@@ -1,4 +1,4 @@
-#limit number of "on" bits in pattern
+#longest common substring
 #testing version
 
 import random as r
