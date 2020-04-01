@@ -75,9 +75,6 @@ class Firefly():
         else:
             self.simscore = mean([self.simscore, newsim])
 
-    def update_score(self, new):
-        self.simscore += new
-
     #first choose whether to (0) add a flash, (1) remove a flash, or (2) move a flash
     #if already at max_flash, cannot add
     def mutate(self):
