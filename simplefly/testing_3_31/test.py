@@ -12,37 +12,37 @@ from statistics import mean
 from exponential import Firefly as exp_fly
 from commonsub_simscore import Firefly as subby_fly
 
-LENGTH = 6
+LENGTH = 10
 MAX_FLASH = 4
 NUM_SPECIES = 3
 NUM_EACH = 15
-EPOCHS = 500 
+EPOCHS = 500
 MUTATE_PROB = .1
 DECISION_THRESHOLD = .7
 PENALTY = -20
 REWARD = 10 
-TRIALS = 10
+TRIALS = 15
 
 #given list of fireflies, the epoch number, and whether we are nudging periodic
-def round_one(fireflies, epoch, push):
+def round_one(fireflies, epoch, push, two):
     for (i, j) in combinations(fireflies, 2):
         same = i.same_species(j)
         #same species                                                 
         if same:
-            #both no pattern                                                             
+            #both no pattern
             if i.pattern == None and j.pattern == None:
                 i.init_pattern()
                 j.pattern = i.pattern
-            #j has pattern                                                               
+            #j has pattern
             elif i.pattern == None:
                 i.pattern = j.pattern
-            #i has pattern                                                               
+            #i has pattern
             elif j.pattern == None:
                 j.pattern = i.pattern
-            #both have                                                                   
+            #both have
             else:
             #compare aggregate sim scores, replicate smaller one                    
-            #when replicating, do so with chance of mutation                         
+            #when replicating, do so with chance of mutation
                 if i.simscore <= j.simscore:
                     j.pattern = i.pattern
                     if r.random() < MUTATE_PROB and epoch < 475:
@@ -60,8 +60,8 @@ def round_one(fireflies, epoch, push):
                             i.mutate()
                     i.reset_simscore()
 
-        #diff species                                                                    
-        else:
+        #diff species
+        elif not two:
             if i.pattern == None:
                 i.init_pattern()
             if j.pattern == None:
@@ -144,7 +144,7 @@ def main(args):
                 fireflies[j+(NUM_EACH*i)] = subby_fly(i)
         
         for epoch in range(EPOCHS):
-            round_one(fireflies, epoch, True)
+            round_one(fireflies, epoch, True, True)
             round_two(fireflies)
         
         runs[('twostep', rep)] = list_flies(fireflies)
@@ -159,7 +159,7 @@ def main(args):
                 fireflies[j+(NUM_EACH*i)] = subby_fly(i) 
 
         for epoch in range(EPOCHS):
-            round_one(fireflies, epoch, True)
+            round_one(fireflies, epoch, True, False)
 
         runs[('normal', rep)] = list_flies(fireflies)
 

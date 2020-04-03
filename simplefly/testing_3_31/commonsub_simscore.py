@@ -5,7 +5,7 @@ import random as r
 from statistics import mean
 import math
 
-LENGTH = 6
+LENGTH = 10
 MAX_FLASH = 4
 
 class Firefly():
