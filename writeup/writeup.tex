@@ -1,0 +1,46 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{naaclhlt2018}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{haldefs}
+\usepackage{url}
+
+\renewcommand{\TODO}[1]{\colorbox{red!30}{[\textbf{#1}]}}
+\newcommand{\includesection}[3]{\section{#2\TODO{#3}} \label{sec:#1} \input{#1}}
+
+\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+\title{Fireflies: \\something something something}
+
+\author{First Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  {\tt email@domain} \\\And
+  Second Author \\
+  Affiliation / Address line 1 \\
+  Affiliation / Address line 2 \\
+  Affiliation / Address line 3 \\
+  {\tt email@domain} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+%\begin{abstract}
+%  \input{abstract}
+%\end{abstract}
+
+
+\includesection{intro      }{Introduction}{}
+\includesection{approach   }{Approach}{}
+\includesection{results}{Results}{}
+\includesection{discussion }{Discussion}{}
+
+
+\bibliography{tellmemore}
+\bibliographystyle{acl_natbib}
+
+\end{document}
