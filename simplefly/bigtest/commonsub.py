@@ -188,8 +188,11 @@ class Firefly():
             m = zlen
             m_start = zstart
             
-        print('length: ', m)
-        print('start: ', m_start)
-        p = [self.pattern[(i+m_start+m) % LENGTH] for i in range(LENGTH)]
+        #print('length: ', m)
+        #print('start: ', m_start)
+        if m_start == None:
+            p = self.pattern
+        else:
+            p = [self.pattern[(i+m_start+m) % LENGTH] for i in range(LENGTH)]
         
         return p

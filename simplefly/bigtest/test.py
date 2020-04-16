@@ -11,7 +11,7 @@ from commonsub import Firefly as subby_fly
 #from shift import Firefly as shifty_fly
 
 LENGTH = 10
-NUM_SPECIES = 3
+NUM_SPECIES = 5
 NUM_EACH = 15
 EPOCHS = 1000
 MUTATE_PROB = .1
@@ -40,8 +40,8 @@ def round_one(fireflies, epoch):
             else:
             #compare aggregate sim scores, replicate smaller one                    
             #when replicating, do so with chance of mutation
-                mod_i = i.num_flash()
-                mod_j = j.num_flash()
+                mod_i = i.num_flash()/3
+                mod_j = j.num_flash()/3
                 if i.simscore*mod_i <= j.simscore*mod_j:
                     j.pattern = i.pattern
                     if r.random() < MUTATE_PROB and epoch < 975:
@@ -141,23 +141,44 @@ def list_flies(flies):
     flies.sort()
     seen = {}
     for f in flies:
-        if (str(f.pattern), f.species) not in seen:
-            seen[(str(f.pattern), f.species)] = 1
+        if (str(f.set_start()), f.species) not in seen:
+            seen[(str(f.set_start()), f.species)] = 1
         else:
-            seen[(str(f.pattern), f.species)] += 1
-
+            seen[(str(f.set_start()), f.species)] += 1
+            
+            
     len1 = flies[0].num_flash()
     len2 = flies[15].num_flash()
     len3 = flies[31].num_flash()
+    len4 = flies[46].num_flash()
+    len5 = flies[61].num_flash()
     a = max(len1, len2)
     b = max(len1, len3)
     c = max(len2, len3)
+    d = max(len1, len4)
+    e = max(len2, len4)
+    f = max(len3, len4)
+    g = max(len1, len5)
+    h = max(len2, len5)
+    i = max(len3, len5)
+    j = max(len4, len5)
 
     score1 = flies[0].calc_similarity(flies[15]) 
     score2 = flies[0].calc_similarity(flies[31]) 
     score3 = flies[15].calc_similarity(flies[31])
-    score_discount = mean([score1*a, score2*b, score3*c])
-    score = mean([score1, score2, score3])
+    score4 = flies[0].calc_similarity(flies[46])
+    score5 = flies[15].calc_similarity(flies[46])
+    score6 = flies[31].calc_similarity(flies[46])
+    score7 = flies[0].calc_similarity(flies[61])
+    score8 = flies[15].calc_similarity(flies[61])                                    
+    score9 = flies[31].calc_similarity(flies[61])
+    score10 = flies[46].calc_similarity(flies[61])
+    score_discount = mean([score1*a, score2*b, score3*c, score4*d, score5*e, score6*f, \
+                           score7*g, score8*h, score9*i, score10*j])
+    #score_discount = score1*len1
+    #score = score1
+    score = mean([score1, score2, score3, score4, score5, score6, \
+                  score7, score8, score9, score10])
     seen[score_discount] = 1
     seen[score] = 1
 
@@ -181,6 +202,7 @@ def main(args):
     #longest common substring
     print('longest common substring, og')
     for rep in range(TRIALS):
+        print(rep)
         fireflies = [0] * (NUM_SPECIES * NUM_EACH)
         for i in range(NUM_SPECIES):
             for j in range(NUM_EACH):
@@ -194,6 +216,7 @@ def main(args):
     #longest common substring, two step game
     print('longest common substring, two step')
     for rep in range(TRIALS):
+        print(rep)
         fireflies = [0] * (NUM_SPECIES * NUM_EACH)
         for i in range(NUM_SPECIES):
             for j in range(NUM_EACH):
