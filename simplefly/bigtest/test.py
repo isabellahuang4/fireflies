@@ -7,8 +7,8 @@ import csv
 from itertools import combinations
 from statistics import mean
 
-from commonsub import Firefly as subby_fly
-#from shift import Firefly as shifty_fly
+#from commonsub import Firefly as subby_fly
+from shift import Firefly as shifty_fly
 
 LENGTH = 10
 NUM_SPECIES = 5
@@ -107,7 +107,7 @@ def round_one_twostep(fireflies, epoch):
             
 def round_two(fireflies):
     r.shuffle(fireflies)
-    for (i,j) in combinations(fireflies, 2):
+    for (i, j) in combinations(fireflies, 2):
         #i sends partial sequence
         start = r.randint(0, LENGTH-4) #note we're picking indices
         end = r.randint(start+3, LENGTH-1) #ensure that seq is at least 3 long
@@ -146,12 +146,12 @@ def list_flies(flies):
         else:
             seen[(str(f.set_start()), f.species)] += 1
             
-            
     len1 = flies[0].num_flash()
     len2 = flies[15].num_flash()
     len3 = flies[31].num_flash()
     len4 = flies[46].num_flash()
     len5 = flies[61].num_flash()
+
     a = max(len1, len2)
     b = max(len1, len3)
     c = max(len2, len3)
@@ -175,8 +175,6 @@ def list_flies(flies):
     score10 = flies[46].calc_similarity(flies[61])
     score_discount = mean([score1*a, score2*b, score3*c, score4*d, score5*e, score6*f, \
                            score7*g, score8*h, score9*i, score10*j])
-    #score_discount = score1*len1
-    #score = score1
     score = mean([score1, score2, score3, score4, score5, score6, \
                   score7, score8, score9, score10])
     seen[score_discount] = 1
@@ -185,7 +183,7 @@ def list_flies(flies):
     return seen
 
 def print_csv(results):
-    with open('results.csv', mode = 'w') as file:
+    with open('results_shift.csv', mode = 'w') as file:
         writer = csv.writer(file, delimiter = ',')
         
         for run in results.keys():
@@ -206,7 +204,7 @@ def main(args):
         fireflies = [0] * (NUM_SPECIES * NUM_EACH)
         for i in range(NUM_SPECIES):
             for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = subby_fly(i)
+                fireflies[j+(NUM_EACH*i)] = shifty_fly(i)
         
         for epoch in range(EPOCHS):
             round_one(fireflies, epoch)
@@ -220,7 +218,7 @@ def main(args):
         fireflies = [0] * (NUM_SPECIES * NUM_EACH)
         for i in range(NUM_SPECIES):
             for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = subby_fly(i)
+                fireflies[j+(NUM_EACH*i)] = shifty_fly(i)
 
         for epoch in range(EPOCHS):
             round_one_twostep(fireflies, epoch)

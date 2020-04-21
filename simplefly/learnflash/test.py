@@ -42,8 +42,8 @@ def round_one(fireflies, epoch, no_limit, two):
             #compare aggregate sim scores, replicate smaller one                    
             #when replicating, do so with chance of mutation
                 if no_limit:
-                    mod_i = i.num_flash()/3
-                    mod_j = j.num_flash()/3
+                    mod_i = i.num_flash()/4
+                    mod_j = j.num_flash()/4
                 else:
                     mod_i = 1
                     mod_j = 1

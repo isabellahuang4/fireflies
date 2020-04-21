@@ -157,3 +157,36 @@ class Firefly():
 
         self.pattern = p
 
+    def set_start(self):
+        m = 0
+        zlen = 0
+        z = False
+        m_start = None
+        zstart = None
+        for i in range(LENGTH*2 - 1):
+            if self.pattern[i % LENGTH] == 1:
+                if zlen > m:
+                    m = zlen
+                    m_start = zstart
+                z = False
+                zlen = 0
+                zstart = None
+            elif z: #in the middle of zero chain
+                zlen += 1
+            else: #start of a zero chain
+                zlen = 1
+                z = True
+                zstart = i
+
+        if z and zlen > m:
+            m = zlen
+            m_start = zstart
+            
+        #print('length: ', m)
+        #print('start: ', m_start)
+        if m_start == None:
+            p = self.pattern
+        else:
+            p = [self.pattern[(i+m_start+m) % LENGTH] for i in range(LENGTH)]
+        
+        return p
