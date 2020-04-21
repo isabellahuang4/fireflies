@@ -7,8 +7,8 @@ def draw_patterns(patterns):
     t.fillcolor('#ffff00')
     t.penup()
     y = 310
-    for p in patterns:
-        p += p
+#    for p in patterns:
+#        p += p
     for p in patterns:
         y -= 60 
         for i in range(len(p)):
