@@ -45,7 +45,9 @@ and
 $p[i]$ refers to the $i^{\textrm{th}}$ bit in the pattern $p$, with indexing starting at 0.
 We can understand the index $i$ as representing the number of permutation cycles applied to the pattern $p_i$. 
 
-\emph{INSERT EXAMPLES AND MAX/MINS}
+As an example, given two flash sequences $[1,0,0,0,0]$ and $[1,0,1,0,0]$, we get a score of 14 using this bit-wise comparison similarity metric. 
+If we require at least one bit to be ``on" in the sequence, then the lowest possible score is 5, realized by the two sequences $[1,0,0,0,0]$ and $[1,1,1,1,1]$. 
+The highest possible score -- that is, two identical patterns -- is 25, or $n^2$ where $n$ is the length of the pattern. 
 
 The second similarity metric we use measures the length of the longest common subsequence. Here, we compare shared subsequences between doubled flash patterns, that is we consider subsequences that are ``wrapped." 
  Mathematically, we can define our second similarity metric as follows,
@@ -53,14 +55,18 @@ The second similarity metric we use measures the length of the longest common su
 where {\tiny \[ T[i][j] = \begin{cases} T[i-1][j-1] + 1 &\textrm{if } p_1[i-1 \mod n] = p_2[j-1 \mod n] \\
 	0 &\textrm{otherwise.} \end{cases}\]}
 	
-\emph{INSERT EXAMPLES AND MAX/MINS}
+Revisiting the previous examples, the longest contiguous subsequence shared between $[1,0,0,0,0]$ and $[1,0,1,0,0]$ is $[0,1,0,0]$, giving a similarity score of 4. 
+The lowest possible score using this metric is 1, again instantiated in patterns of length 5 by the two sequences $[1,0,0,0,0]$ and $[1,1,1,1,1]$. 
+The highest possible score for two identical patterns is 9, or $2n-1$, where $n$ is the length of the pattern. 
+We see an immediate difference in range for these two similarity metrics and how they differ in capturing degrees of similarity. 
 
 This second similarity metric is modified for a partial sequence and used in the partial signal naming game in order to decide whether the subsequence belongs to the same species. 
 
 \subsection{Risk of Flashing -- Score Discounting}
 To address the physiological cost of producing a flash and the predation risk of flashing, we discount scores with respect to the number of flashes in the signal in order to select towards more limited time spent flashing. 
-In the full signal naming game, in which a lower score indicates a fitter flash pattern, the score that is compared during the learning step is multiplied by the number of flashes divided by 3. 
-Conversely, in the partial signal naming game, in which a higher score indicates more success in the comparison step, the score is divided by the number of flashes in the pattern. 
+In the full signal naming game, in which a lower score indicates a fitter flash pattern, the score that is compared during the learning step is multiplied by the number of flashes divided by 3. Specifically, the similarity score between two patterns $p_1$ and $p_2$ from the perspective of the firefly with pattern $p_1$ is, \[ \textrm{score}(p_1, p_2) = \frac{\sum_{i = 1}^{n} p_1[i]}{3} \sim(p_1, p_2).\]
+
+Conversely, in the partial signal naming game, in which a higher score indicates more success in the comparison step, the score is divided by the number of flashes in the pattern. That is, the similarity score between two patterns $p_1$ and $p_2$ from the perspective of the firefly with pattern $p_1$ is, \[ \textrm{score}(p_1, p_2) = \frac{\sim(p_1, p_2)}{\sum_{i = 1}^{n} p_1[i]}. \]
 
 %\subsection{Mutation Methods}
 
