@@ -1,6 +1,5 @@
 #all the stops
-#longest common substring
-#push periodic
+#longest common substring metric
 #no max flash -- but multiply score by number of flashes (one step)
 #                encourage fewer flashes
 
@@ -16,12 +15,14 @@ class Firefly():
         self.pattern = None
         self.simscore = 0
     
+    #sorting flies in list by species and simscore
     def __lt__(self, other):
         if self.species == other.species:
             return self.simscore < other.simscore
         else:
             return self.species < other.species
 
+    #randomly generate initial pattern
     def init_pattern(self):
         p = [0] * LENGTH
         num_flash = r.randint(1, LENGTH)
@@ -30,21 +31,24 @@ class Firefly():
             p[i] = 1
         self.pattern = p
 
+    #return number of flashes in current pattern
+    #for discounting
     def num_flash(self):
         if self.pattern != None:
             return sum(self.pattern)
         else:
             return None
 
+    #return whether other is of the same species
     def same_species(self, other):
         if self.species == other.species:
             return True
         else: 
             return False
 
-    #find longest shared substring
-    #repeat each pattern so we get the "wrap"
-    #smol similarity is better
+    #find longest common substring
+    #repeat each pattern for "wrap"
+    #lower score is better
     def calc_similarity(self, other):
         X = self.pattern + self.pattern[:LENGTH-1]
         Y = other.pattern + other.pattern[:LENGTH-1]
@@ -62,6 +66,9 @@ class Firefly():
 
         return score
 
+    #longest common substring for partial naming game
+    #wrap pattern not subsequence
+    #modulate length of lcs by length of subsequence
     def make_decision(self, seq):
         X = self.pattern + self.pattern[:LENGTH-1]
         Y = seq
@@ -117,7 +124,8 @@ class Firefly():
             self.pattern[add] = 1
             self.pattern[delete] = 0
 
-
+    #nudge pattern towards periodicity
+    #by calculating average distance between flashes
     def push_periodic(self):
         indices = []
         for i in range(LENGTH):
@@ -162,7 +170,7 @@ class Firefly():
 
         self.pattern = p
 
-
+    #rewrite pattern with longest string of 0s at the end
     def set_start(self):
         m = 0
         zlen = 0

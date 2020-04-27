@@ -1,4 +1,4 @@
-#testing everything
+#naming game
 
 import sys
 import random as r
@@ -21,10 +21,10 @@ REWARD = 10
 TRIALS = 20
 
 #given list of fireflies, the epoch number
+#implement original naming game 
 def round_one(fireflies, epoch):
     for (i, j) in combinations(fireflies, 2):
         same = i.same_species(j)
-        #same species                                                 
         if same:
             #both no pattern
             if i.pattern == None and j.pattern == None:
@@ -40,6 +40,7 @@ def round_one(fireflies, epoch):
             else:
             #compare aggregate sim scores, replicate smaller one                    
             #when replicating, do so with chance of mutation
+                #modulate by number of flashes (discounting)
                 mod_i = i.num_flash()/3
                 mod_j = j.num_flash()/3
                 if i.simscore*mod_i <= j.simscore*mod_j:
@@ -60,6 +61,7 @@ def round_one(fireflies, epoch):
                     i.reset_simscore()
 
         else:
+            #calculate and update similarity score
             if i.pattern == None:
                 i.init_pattern()
             if j.pattern == None:
@@ -86,6 +88,7 @@ def round_one_twostep(fireflies, epoch):
             else:
             #compare aggregate rewards, replicate larger
             #when replicating, do so with chance of mutation
+                #modulate by number of flashes (discounting)
                 mod_i = i.num_flash()
                 mod_j = j.num_flash()
                 if i.simscore/mod_i >= j.simscore/mod_j:
@@ -104,7 +107,8 @@ def round_one_twostep(fireflies, epoch):
                         else:
                             i.mutate()
                     i.reset_simscore()
-            
+
+#comparison step of two step naming game
 def round_two(fireflies):
     r.shuffle(fireflies)
     for (i, j) in combinations(fireflies, 2):
@@ -137,6 +141,7 @@ def round_two(fireflies):
                 j.update_score(PENALTY*(seq_length/LENGTH))
 
 
+#printing results
 def list_flies(flies):
     flies.sort()
     seen = {}
@@ -182,6 +187,7 @@ def list_flies(flies):
 
     return seen
 
+#write to csv
 def print_csv(results):
     with open('results_shift.csv', mode = 'w') as file:
         writer = csv.writer(file, delimiter = ',')
@@ -190,15 +196,15 @@ def print_csv(results):
             row = [run]
             flies = results[run]
             row += flies
-
             writer.writerow(row)
 
 
+
 def main(args):
+    #keep track of all the results
     runs = {}
 
-    #longest common substring
-    print('longest common substring, og')
+    #one step game
     for rep in range(TRIALS):
         print(rep)
         fireflies = [0] * (NUM_SPECIES * NUM_EACH)
@@ -211,8 +217,8 @@ def main(args):
         
         runs[('commonsub_og', rep)] = list_flies(fireflies)
 
-    #longest common substring, two step game
-    print('longest common substring, two step')
+    
+    #two step game
     for rep in range(TRIALS):
         print(rep)
         fireflies = [0] * (NUM_SPECIES * NUM_EACH)
@@ -226,36 +232,6 @@ def main(args):
 
         runs[('commonsub_two', rep)] = list_flies(fireflies)
 
-    '''
-    #shifting                                      
-    print('shifter, og')
-    for rep in range(TRIALS):
-        fireflies = [0] * (NUM_SPECIES * NUM_EACH)
-        for i in range(NUM_SPECIES):
-            for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = shifty_fly(i)
-
-        for epoch in range(EPOCHS):
-            round_one(fireflies, epoch)
-
-        runs[('shift_og', rep)] = list_flies(fireflies)
-        
-    #shifting, two step game
-    print('shifter, two step')
-    for rep in range(TRIALS):
-        fireflies = [0] * (NUM_SPECIES * NUM_EACH)
-        for i in range(NUM_SPECIES):
-            for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = shifty_fly(i)
-
-        for epoch in range(EPOCHS):
-            round_one_twostep(fireflies, epoch)
-            round_two(fireflies)
-
-        runs[('shift_two', rep)] = list_flies(fireflies)
-    '''
-         
-    print('printing')
     print_csv(runs)
 
 if __name__ == '__main__':

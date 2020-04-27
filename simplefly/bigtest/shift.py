@@ -1,6 +1,5 @@
 #all the stops
-#shift sim score
-#push periodic
+#shifting sim score
 #no max flash -- but multiply score by number of flashes (one step)
 #                encourage fewer flashes
 
