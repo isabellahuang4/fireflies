@@ -5,8 +5,13 @@
 
 Upon visual inspection of the flash patterns, those patterns emerging from the partial sequence naming game seem to exhibit pseudo-periodic properties. 
 Given that observed firefly flash signals are periodic in nature, that is, they can be fully described by the flash duration (length of a contiguous "on"), interpulse interval, and flash pattern interval, we proffer that periodic sequences are efficient solutions to the problem of distinguishability.
-Moreover, the simulation selection pressures of interrupted signals as seen in the partial sequence naming game pose a better imitation of the selection pressures. 
+Additionally, the simulation selection pressures of interrupted signals as seen in the partial sequence naming game pose a better imitation of the selection pressures. 
 This poses a question of how we might quantify efficiency with metrics other than simply counting the number of flashes in a pattern. 
+
+Indeed, we observe that the resultant patterns from our simulations are much more complicated -- with variable flash durations and interpulse intervals within one signal -- than those observed and catalogued by (Stanger-Hall and Lloyd). 
+A better efficiency metric might be needed to impose more realistic selective pressures in order to better inform our model.
+Moreover, imposing a more complex metric on efficiency would limit the pattern space more, which may allow certain combinations of patterns to stand out as fitter. 
+We note that within our 20 trials of each simulation, we never obtained the same set of final patterns more than once.
 
 We present the final patterns that emerge from the naming games after a few time steps of the game without individual patterns mutating. 
 Tracking the evolution of patterns with respect to other patterns in all agents' memories might better inform how the space of patterns is searched and explored. 
@@ -19,3 +24,9 @@ Such a dynamic simulation would better highlight how the presence of a specific 
  
 % periodic sequences are efficient solution to the problem???
 
+We acknowledge that only the male flash patterns were studied in our analysis of the evolutionary pressures of the flash signal.
+However, with inspiration from reinforcement learning and policy learning, our partial pattern naming game lends itself easily to incorporate female response times within the model. 
+Indeed, if we require the fireflies to make a second decision encapsulating a correct response delay, we can also follow the way in which the current selection pressures considered shape how females learn an optimal response delay time. 
+
+Our model is simplified with the use of a complete graph as the underlying topology of the naming game. 
+While this choice in topology allows for quick consensus to be reached, different types of random graphs or geographically inspired graphs may better encapsulate environmental factors that affect speciation. 
