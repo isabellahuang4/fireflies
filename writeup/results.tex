@@ -4,51 +4,13 @@
 %%% End: 
 
 %results
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/2_lcs_one/all.png}
-\caption{Top results for 2 species full pattern naming game, with similarity scores from left to right of 3, 4, and 4.}
-\end{figure} 
 
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/2_lcs_two/all.png}
-\caption{Top results for 2 species partial pattern naming game, with similarity scores from left to right of 7, 9 and 12 .}
-\end{figure} 
-
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/3_lcs_one/all.png}
-\caption{Top results for 3 species full pattern naming game, with similarity scores from left to right of 17.3, 21.7, and 24.}
-\end{figure} 
-
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/3_lcs_two/all.png}
-\caption{Top results for 3 species partial pattern naming game, with similarity scores from left to right of 18, 24.7, and 25 .}
-\end{figure} 
-
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/4_lcs_one/all.png}
-\caption{Top results for 4 species full pattern naming game, with similarity scores from left to right of 20.3, 21.3, and 26.3.}
-\end{figure} 
-
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/4_lcs_two/all.png}
-\caption{Top results for 4 species partial pattern naming game, with similarity scores from left to right of 16.3, 25, 28.3.}
-\end{figure} 
-
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/5_lcs_one/all.png}
-\caption{Top results for 5 species full pattern naming game, with similarity scores from left to right of 22.9, 23.1, and 26.3.}
-\end{figure} 
-
-\begin{figure}[h]
-\includegraphics[width = \columnwidth]{./pictures/5_lcs_two/all.png}
-\caption{Top results for 5 species partial pattern naming game, with similarity scores from left to right of 24, 25.7, 26.}
-\end{figure}  
 
 We experimentally simulated both types of naming games, varying the similarity metric used and the number of species in the simulation.
 Each naming game simulation was populated with 15 fireflies of each species and ran for 1000 time steps. 
-For each set of parameters, we ran 20 different trials. We present some of the resulting patterns of the trials with the best discounted similarity scores. 
+For each set of parameters, we ran 20 different trials. We present some of the resulting patterns of the trials with the best discounted similarity scores using the longest common substring metric. 
 
-\emph{TODO: we only include lcs metric because...}
+%\emph{TODO: we only include lcs metric because...}
 
 For simplicity, we set the pattern length to 10 -- that is, we defined the flash patterns as a sequence of ten 0s or 1s, with a 1 indicating a flash and a 0 indicating no flash for one time unit. 
 Because we view the patterns cyclically, there is no inherent starting index with which to present the signals. 

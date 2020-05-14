@@ -62,8 +62,8 @@ The highest possible score for two identical patterns is 9, or $2n-1$, where $n$
 We see an immediate difference in range for these two similarity metrics and how they differ in capturing degrees of similarity. 
 
 This second similarity metric can be modified for a partial sequence and is used in the partial signal naming game in order to decide whether a subsequence belongs to the same species. 
-That is, we find the longest common substring between the full pattern of one firefly and the subpattern of the other and use that length modulated by the length of the subsequence with a constant decision threshold. 
-Let $p_2$ be a partial sequence with length $m$. Then, the decision score is 
+That is, we find the longest common substring between the full pattern of one firefly and the subpattern of the other and use that length divided by the length of the subsequence with a constant decision threshold. 
+Specifically, et $p_2$ be a partial sequence with length $m$. Then, the decision score is 
 \[ d(p_1, p_2) = \max _{i \in [0,2n-1], j \in [0,m]} T[i][j], \] 
 where {\tiny \[ T[i][j] = \begin{cases} T[i-1][j-1] + 1 &\textrm{if } p_1[i-1 \mod n] = p_2[j-1] \\
 	0 &\textrm{otherwise.} \end{cases}\]}
@@ -79,7 +79,45 @@ Conversely, in the partial signal naming game, in which a higher aggregate rewar
 
 %\subsection{Mutation Methods}
 
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/2_lcs_one/all.png}
+\caption{Top results for 2 species full pattern naming game, with similarity scores from left to right of 3, 4, and 4.}
+\end{figure} 
 
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/2_lcs_two/all.png}
+\caption{Top results for 2 species partial pattern naming game, with similarity scores from left to right of 7, 9 and 12.}
+\end{figure} 
+
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/3_lcs_one/all.png}
+\caption{Top results for 3 species full pattern naming game, with similarity scores from left to right of 17.3, 21.7, and 24.}
+\end{figure} 
+
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/3_lcs_two/all.png}
+\caption{Top results for 3 species partial pattern naming game, with similarity scores from left to right of 18, 24.7, and 25 .}
+\end{figure} 
+
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/4_lcs_one/all.png}
+\caption{Top results for 4 species full pattern naming game, with similarity scores from left to right of 20.3, 21.3, and 26.3.}
+\end{figure} 
+
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/4_lcs_two/all.png}
+\caption{Top results for 4 species partial pattern naming game, with similarity scores from left to right of 16.3, 25, 28.3.}
+\end{figure} 
+
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/5_lcs_one/all.png}
+\caption{Top results for 5 species full pattern naming game, with similarity scores from left to right of 22.9, 23.1, and 26.3.}
+\end{figure} 
+
+\begin{figure}[h]
+\includegraphics[width = \columnwidth]{./pictures/5_lcs_two/all.png}
+\caption{Top results for 5 species partial pattern naming game, with similarity scores from left to right of 24, 25.7, 26.}
+\end{figure}   
 \subsection{Methods Summary}
 In both naming games, fireflies seek to find a flash pattern that is distinctive from the patterns seen in other firefly species, while limiting the number of flashes used to create such differences.
 Distinctiveness is measured through one of two similarity scores or by the ability to make the correct decision with respect to partial signal recognition.
