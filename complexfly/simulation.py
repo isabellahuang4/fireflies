@@ -9,13 +9,12 @@ from statistics import mean
 
 from fly import Firefly
 
-LENGTH = 10
+LENGTH = 20
 NUM_SPECIES = 2
 NUM_EACH = 10
 EPOCHS = 500
 MUTATE_PROB = .1
-TRIALS = 15
-
+TRIALS = 1
 
 #given list of fireflies, the epoch number
 #implement original naming game 
@@ -64,10 +63,10 @@ def list_flies(flies):
     flies.sort()
     seen = {}
     for f in flies:
-        if (str(f.set_start()), f.species) not in seen:
-            seen[(str(f.set_start()), f.species)] = 1
+        if (str(f.recreate_pattern()), f.species) not in seen:
+            seen[(str(f.recreate_pattern()), f.species)] = 1
         else:
-            seen[(str(f.set_start()), f.species)] += 1
+            seen[(str(f.recreate_pattern()), f.species)] += 1
             
     return seen
 
@@ -87,54 +86,25 @@ def print_csv(results):
 def main(args):
     #keep track of all the results
     runs = {}
+
+
+    a = [.3, .6, 1]
+    b = [.3, .6, 1]
+
+    for (A, B) in ((A,B) for A in a for B in b):
     
-    #A = 1, B = 0
-    A = 1
-    B = 0
-    for rep in range(TRIALS):
-        print('Aone Bzero', rep)
-        fireflies = [0] * (NUM_SPECIES * NUM_EACH)
-        for i in range(NUM_SPECIES):
-            for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = Firefly(i)
-        
-        for epoch in range(EPOCHS):
-            r.shuffle(fireflies)
-            round_one(fireflies, epoch, A, B)
-        
-        runs[('A-one', rep)] = list_flies(fireflies)
-    
-    #A = 0, B = 1
-    A = 0
-    B = 1
-    for rep in range(TRIALS):
-        print('Azero Bone', rep)
-        fireflies = [0] * (NUM_SPECIES * NUM_EACH)
-        for i in range(NUM_SPECIES):
-            for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = Firefly(i)
+        for rep in range(TRIALS):
+            print(A, B, rep)
+            fireflies = [0] * (NUM_SPECIES * NUM_EACH)
+            for i in range(NUM_SPECIES):
+                for j in range(NUM_EACH):
+                    fireflies[j+(NUM_EACH*i)] = Firefly(i)
 
-        for epoch in range(EPOCHS):
-            r.shuffle(fireflies)
-            round_one(fireflies, epoch, A, B)
+            for epoch in range(EPOCHS):
+                r.shuffle(fireflies)
+                round_one(fireflies, epoch, A, B)
 
-        runs[('B-one', rep)] = list_flies(fireflies)
-
-    #A = 1, B = 1                                     
-    A = 1
-    B = 1
-    for rep in range(TRIALS):
-        print('Aone Bone', rep)
-        fireflies = [0] * (NUM_SPECIES * NUM_EACH)
-        for i in range(NUM_SPECIES):
-            for j in range(NUM_EACH):
-                fireflies[j+(NUM_EACH*i)] = Firefly(i)
-
-        for epoch in range(EPOCHS):
-            r.shuffle(fireflies)
-            round_one(fireflies, epoch, A, B)
-
-        runs[('A-one B-one', rep)] = list_flies(fireflies)
+            runs[(A, B, rep)] = list_flies(fireflies)
 
     print_csv(runs)
 
