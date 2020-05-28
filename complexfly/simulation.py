@@ -6,15 +6,16 @@ import math
 import csv 
 from itertools import combinations
 from statistics import mean
+from timeit import default_timer as timer
 
 from fly import Firefly
 
 LENGTH = 20
-NUM_SPECIES = 2
+NUM_SPECIES = 5
 NUM_EACH = 10
 EPOCHS = 500
 MUTATE_PROB = .1
-TRIALS = 1
+TRIALS = 10
 
 #given list of fireflies, the epoch number
 #implement original naming game 
@@ -42,12 +43,13 @@ def round_one(fireflies, epoch, A, B):
                     if r.random() < MUTATE_PROB and epoch < 495:
                         j.mutate()
                     j.reset_simscore()
+                    j.last_score = iscore #for printing purposes
                 else:
                     i.pattern = j.pattern[:]
                     if r.random() < MUTATE_PROB and epoch < 495:
                         i.mutate()
                     i.reset_simscore()
-
+                    i.last_score = jscore #for printing purposes
         else:
             #calculate and update similarity score
             if i.pattern == None:
@@ -64,9 +66,9 @@ def list_flies(flies):
     seen = {}
     for f in flies:
         if (str(f.recreate_pattern()), f.species) not in seen:
-            seen[(str(f.recreate_pattern()), f.species)] = 1
-        else:
-            seen[(str(f.recreate_pattern()), f.species)] += 1
+            seen[(str(f.recreate_pattern()), f.species)] = f.last_score
+        elif f.last_score < seen[(str(f.recreate_pattern()), f.species)]:
+            seen[(str(f.recreate_pattern()), f.species)] = f.last_score
             
     return seen
 
@@ -79,6 +81,7 @@ def print_csv(results):
             row = [run]
             flies = results[run]
             row += flies
+            row += flies.values()
             writer.writerow(row)
 
 
@@ -87,24 +90,24 @@ def main(args):
     #keep track of all the results
     runs = {}
 
-
-    a = [.3, .6, 1]
-    b = [.3, .6, 1]
-
-    for (A, B) in ((A,B) for A in a for B in b):
+    a = [.2, .4, .6, .8, 1]
     
+    for A in a:
+        B = round(1-A,1)
+        print(A, B)
         for rep in range(TRIALS):
-            print(A, B, rep)
             fireflies = [0] * (NUM_SPECIES * NUM_EACH)
             for i in range(NUM_SPECIES):
                 for j in range(NUM_EACH):
                     fireflies[j+(NUM_EACH*i)] = Firefly(i)
 
+            start = timer()
             for epoch in range(EPOCHS):
                 r.shuffle(fireflies)
                 round_one(fireflies, epoch, A, B)
-
+            end = timer()
             runs[(A, B, rep)] = list_flies(fireflies)
+            print(rep, end-start)
 
     print_csv(runs)
 

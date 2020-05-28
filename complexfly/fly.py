@@ -11,7 +11,8 @@ class Firefly():
         self.species = species #which num species
         self.pattern = None
         self.simscore_list = []
-    
+        self.last_score = None #for printing purposes
+        
     #sorting flies in list by species and simscore
     def __lt__(self, other):
         if self.species == other.species:
