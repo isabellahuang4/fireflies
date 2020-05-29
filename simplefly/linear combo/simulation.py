@@ -2,11 +2,10 @@
 
 import sys
 import random as r
-import math
 import csv 
 from itertools import combinations
-from statistics import mean
-from timeit import default_timer as timer
+#from statistics import mean
+#from timeit import default_timer as timer
 
 from fly import Firefly
 
@@ -90,25 +89,25 @@ def main(args):
     #keep track of all the results
     runs = {}
 
-    a = [.2, .4, .6, .8, 1]
+    a = [.2, .4, .6, .8]
     
     for A in a:
         B = 1-A
-        print(A,B)
+        #print(A,B)
         for rep in range(TRIALS):
             fireflies = [0] * (NUM_SPECIES * NUM_EACH)
             for i in range(NUM_SPECIES):
                 for j in range(NUM_EACH):
                     fireflies[j+(NUM_EACH*i)] = Firefly(i)
 
-            start = timer()
+            #start = timer()
             for epoch in range(EPOCHS):
                 r.shuffle(fireflies)
                 round_one(fireflies, epoch, A, B)
-            end = timer()
+            #end = timer()
             
             runs[(A, B, rep)] = list_flies(fireflies)
-            print(rep, end-start)
+            #print(rep, end-start)
 
     print_csv(runs)
 

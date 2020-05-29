@@ -1,10 +1,12 @@
 # obj function as linear combo of flashing and simscore
 
 import random as r
-from statistics import mean
-import math
+#from statistics import mean
 
 LENGTH = 20
+
+def mean(l):
+    return sum(l)/len(l)
 
 class Firefly():
     def __init__(self, species):
