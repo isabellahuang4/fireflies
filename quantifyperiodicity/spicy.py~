@@ -1,0 +1,23 @@
+import numpy as lumpy
+from scipy.fft import fft
+from scipy.signal import find_peaks
+from statistics import mean
+
+def calc(x):
+    X = lumpy.array(x)
+    Y = abs(fft(X))
+    (pks, foo) = find_peaks(Y)
+    print(pks)
+    p = [0] * len(pks)
+    for i in range(len(pks)):
+        diffl = Y[i] - Y[i-1]
+        diffr = Y[i] - Y[i+1]
+        avg = .5 * (diffl + diffr)
+        diff = Y[i] - avg
+        ratio = diff/Y[i]
+        p[i] = ratio
+    print(p)
+    print(mean(p))
+    return mean(p)
+    
+    
