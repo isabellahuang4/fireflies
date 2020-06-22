@@ -25,8 +25,8 @@ def distance(p1, p2):
                 table[i][j] = table[i-1][j-1]
             else:
                 table[i][j] = 1 + min(table[i][j-1], \
-                                      table[i-1][j], \
-                                      table[i-1][j-1])
+                                      table[i-1][j],)# \
+                                      #table[i-1][j-1])
     return table[LENGTH][LENGTH]
              
 def pattern(f, d, x):
@@ -122,7 +122,7 @@ def main(args):
         else:
             distances[p] = 0
 
-    with open('distances.pickle', 'wb') as file:
+    with open('distances_noswap.pickle', 'wb') as file:
         pickle.dump(distances, file, protocol = pickle.HIGHEST_PROTOCOL)
 
 
