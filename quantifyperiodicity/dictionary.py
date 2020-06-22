@@ -103,15 +103,15 @@ def main(args):
     
     
     with open('all.pickle', 'wb') as file:
-        pickle.dump(all, file, protocol = pickle.HIGHEST_PROTOCOL)
+        pickle.dump(all_p, file, protocol = pickle.HIGHEST_PROTOCOL)
 
     '''
     with open('all.pickle', 'rb') as file:
-        all_p = pickle.load(file)
+        all_patterns = pickle.load(file)
 
     #for nonperiodic, find closest pariodic -- store edit distance
     distances = {}
-    for p in all_p:
+    for p in all_patterns:
         if p not in periodic:
             min = LENGTH*2
             for purp in periodic:
