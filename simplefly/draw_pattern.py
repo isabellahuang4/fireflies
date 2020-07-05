@@ -28,16 +28,21 @@ def draw(patterns):
      
 def draw_plot(patterns):
     fig, ax = plot.subplots()
+    max_len = 0
     for j in range(len(patterns)):
         p = patterns[j]
         bars = []
+        if len(p) > max_len:
+            max_len = len(p)
         for i in range(len(p)):
             if p[i] == 1:
                 bars.append((10*i,10))
-        ax.broken_barh(bars, (5*j,4), facecolors='tab:green')
+        ax.broken_barh(bars, (5*j,4), facecolors='y')
+        ax.broken_barh([(10*len(p), 1)], (5*j,4), facecolors='k')
 
     ax.set_ylim(0,len(patterns)*5)
-    ax.set_xlim(0,200)
+    #need to decide whether the zoom to max allowable length or max seen length
+    ax.set_xlim(0,max_len*10+2)
     ax.grid(True)
     plot.show()
 
