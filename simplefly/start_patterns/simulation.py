@@ -39,13 +39,13 @@ def round_one(fireflies, epoch, A, B):
                 jscore = (A*j.score()) + (B*j.num_flash())
                 if iscore <= jscore:
                     j.pattern = i.pattern[:]
-                    if r.random() < MUTATE_PROB and epoch < 495:
+                    if j.species != 0 and r.random() < MUTATE_PROB and epoch < 495:
                         j.mutate()
                     j.reset_simscore()
                     j.last_score = iscore
                 else:
                     i.pattern = j.pattern[:]
-                    if r.random() < MUTATE_PROB and epoch < 495:
+                    if i.species != 0 and r.random() < MUTATE_PROB and epoch < 495:
                         i.mutate()
                     i.reset_simscore()
                     i.last_score = jscore
