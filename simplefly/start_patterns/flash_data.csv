@@ -1,0 +1,32 @@
+species,num_flashes,flash_duration,ipi,fpi
+P. granulatus,1,0.2,1.5,1.5
+P. tenuicinctus,1,0.1,2,2
+P. australis,1,0.1,3.8,3.8
+P. brimleyi,1,0.1,1.5,1.5
+P. tanytoxus,1,0.4,3,3
+P. collustrans,1,0.3,2.9,2.9
+P. concisus,1,0.3,2,2
+P. pyralis (TX),1,0.4,7,7
+P. pyralis,1,0.5,6.3,6.3
+P. stellaris,1,0.3,2.5,2.5
+P. dimissus,1,0.2,1.5,1.5
+P. umbratus,1,0.5,6.7,6.7
+P. SUM / frosti,1,0.3,7.7,7.7
+P. punctulatus,1,0.1,1.5,1.5
+P. scintillans,1,0.1,2.5,2.5
+P. obscurellus,3,0.2,0.6,5.3
+P. carolinus,9,0.2,0.5,14
+P. ardens,4,0.3,0.6,10
+P. ignitus,1,0.2,5.3,5.3
+P. aquilonius,1,0.3,4.8,4.8
+P. macdermotti (PA),2,0.2,2.1,7.1
+P. greeni,2,0.1,1.2,4.3
+P. consangineus,2,0.2,0.5,5.5
+P. macdermotti,2,0.2,2.1,7.1
+P. texanus,1,0.4,5.8,5.8
+P. floridanus (FL),1,0.2,4.2,4.2
+P. immaculatus,1,0.3,3.3,3.3
+P. species LUM,1,0.6,5.5,5.5
+P. sabulosus (TN),1,0.1,4.2,4.2
+P. curtatus (IND),1,0.3,4,4
+P. marginellus,1,0.3,4.6,4.6
