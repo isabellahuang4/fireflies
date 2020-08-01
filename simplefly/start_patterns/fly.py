@@ -3,8 +3,8 @@
 import random as r
 #from statistics import mean
 
-MIN_LENGTH = 10
-MAX_LENGTH = 100
+MIN_LENGTH = 15
+MAX_LENGTH = 140
 
 def mean(l):
     return sum(l)/len(l)

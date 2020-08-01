@@ -1,6 +1,8 @@
 import turtle as t
 import matplotlib.pyplot as plot
 import csv
+import numpy as lumpy
+from PIL import Image
 
 #given list of patterns as list of integers, draws in turtle 
 def draw(patterns):
@@ -25,7 +27,8 @@ def draw(patterns):
                 t.penup()
     t.done()
 
-     
+
+#given list of patterns as list of integers, draws in matplotlib
 def draw_plot(patterns):
     fig, ax = plot.subplots()
     max_len = 0
@@ -46,6 +49,7 @@ def draw_plot(patterns):
     ax.grid(True)
     plot.show()
 
+#convert string patterns to int patterns
 def read_pattern(line):
     p = []
     for i in range(len(line)):
@@ -53,7 +57,9 @@ def read_pattern(line):
             return p
         elif line[i] == '0' or line[i] == '1':
             p.append(int(line[i]))
-    
+
+
+#read in results from csv and draw patterns
 def read_in(file_path, numsp):
     with open(file_path) as f:
         reader = csv.reader(f)
@@ -64,3 +70,12 @@ def read_in(file_path, numsp):
             draw_plot(p_list)
                 
             
+def plot_pics(pictures):
+    fig = plot.figure()
+    f, axarr = plot.subplots()
+    for i in range(len(pictures)):
+        p = pictures[i]
+        img = fig.figimage(lumpy.array(Image.open(p)), xo= i*1280, yo = i*960, resize = True)
+    plot.show()
+
+        
